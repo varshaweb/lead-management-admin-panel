@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Leads</title>
+
+<link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="sidebar.css">
+
+
+<style>
+
+
+/* Main */
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+}
+
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+     <!-- Toggle Button -->
+       <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+       <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+
+        <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="profile-section">
+            <img src="https://via.placeholder.com/90" class="profile-img">
+            <div class="user-name">John Doe</div>
+        </div>
+
+       <a href="#" class="side-btn logout" style="margin-top: 20px;">Logout</a>
+        <a href="manage-business-lead-test.html" class="side-btn">Manage Lead</a>
+        <a href="warm-lead.html" class="side-btn">Warm Lead</a>
+        <a href="hot-lead.html" class="side-btn">Hot Lead</a>
+        <a href="Lead-report.html" class="side-btn">Employee Lead Report</a>
+        <a href="Meeting-report.html" class="side-btn">Meeting Report</a>
+        <a href="search-lead.html" class="side-btn">Search Lead</a>
+
+    </div>
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="card">
+            <h3>Search Leads</h3>
+
+            <!-- Search Filters -->
+            <div class="search-grid">
+                <input type="text" placeholder="Mobile Number">
+            
+                <button>Search</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+
+        if (window.innerWidth <= 768) {
+            sidebar.classList.toggle("active");
+            overlay.classList.toggle("active");
+        } else {
+            sidebar.classList.toggle("collapsed");
+        }
+    }
+</script>
+
+
+</body>
+</html>

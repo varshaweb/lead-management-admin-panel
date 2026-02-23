@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer Lead Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="sidebar.css">
+
+    <style>
+        * {
+        box-sizing: border-box;
+    }
+
+    /* Person Icon */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    z-index: 1001;
+
+    width: 95%;
+    max-width: 650px;   /* ✅ Your increased width */
+    max-height: 80vh;
+    overflow-y: auto;
+}
+.popup h3 {
+    margin-top: 0;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 1000;
+}
+
+/* ================= ICON ================= */
+
+.person-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: 0.2s;
+}
+
+.person-icon:hover {
+    transform: scale(1.2);
+}
+
+    
+    .container {
+        width: 100%;
+        max-width: 850px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    header h1 {
+        font-size: 26px;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+    }
+
+    header img {
+        width: 140px;
+    }
+
+    .profile-icon {
+        padding: 8px 18px;
+        border-radius: 8px;
+        background: linear-gradient(45deg, #19598c, #0d3e63);
+        color: #fff;
+        font-weight: 500;
+        font-size: 14px;
+        transition: 0.3s ease;
+    }
+
+    .profile-icon a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .profile-icon:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(25, 89, 140, 0.3);
+    }
+
+    .contact-info {
+        background: #f7f9fc;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .contact-info p {
+        margin: 8px 0;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .contact-info strong {
+        color: #19598c;
+    }
+
+    select, input[type="datetime-local"] {
+        width: 48%;
+        padding: 10px 12px;
+        margin-top: 10px;
+        border-radius: 10px;
+        border: 1px solid #dce3ea;
+        font-size: 15px;
+        transition: 0.3s ease;
+        background-color: #fff;
+    }
+
+    textarea{
+        width: 100%;
+        padding: 10px 12px;
+        margin-top: 10px;
+        border-radius: 10px;
+        border: 1px solid #dce3ea;
+        font-size: 15px;
+        transition: 0.3s ease;
+        background-color: #fff;
+    }
+
+    select:focus,
+    textarea:focus,
+    input:focus {
+        outline: none;
+        border-color: #19598c;
+        box-shadow: 0 0 0 3px rgba(25, 89, 140, 0.1);
+    }
+
+    textarea {
+        min-height: 60px;
+        resize: vertical;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        margin-top: 20px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(45deg, #19598c, #0d3e63);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px rgba(13, 62, 99, 0.3);
+    }
+
+    
+
+    /* Responsive */
+
+    @media (max-width: 600px) {
+        .container {
+            padding: 25px;
+        }
+
+        header {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        header img {
+            width: 120px;
+        }
+    }
+
+    .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.info-item {
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid #eef1f5;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+
+.label {
+    display: inline;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+    word-break: break-word;
+}
+
+@media(max-width: 768px){
+    .info-grid{
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+    <script>
+        function showConditionalFields() {
+            var status = document.getElementById("status").value;
+            
+            if (status === "Call Later") {
+                openPopup('ReschedulePopup');
+                document.getElementById('rescheduleDatetime').click();
+
+            }
+        }
+
+        function openPopup(popupId) {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById(popupId).style.display = 'block';
+        }
+
+        function closePopup(popupId) {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById(popupId).style.display = 'none';
+        }
+    </script>
+    <!-- Include Flatpickr for enhanced date and time selection -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- sidebar css -->
+   
+</head>
+<body>
+    
+       <div class="layout">
+
+    <!-- Toggle Button -->
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="profile-section">
+            <div class="user-name">John Doe</div>
+        </div>
+
+        <a href="#" class="side-btn logout" style="margin-top: 20px;">Logout</a>
+        <a href="manage-business-lead-test.html" class="side-btn">Manage Lead</a>
+        <a href="warm-lead.html" class="side-btn">Warm Lead</a>
+        <a href="hot-lead.html" class="side-btn">Hot Lead</a>
+        <a href="Lead-report.html" class="side-btn">Employee Lead Report</a>
+        <a href="Meeting-report.html" class="side-btn">Meeting Report</a>
+        <a href="search-lead.html" class="side-btn">Search Lead</a>
+
+
+    </div>
+
+
+
+    case 1    <div class="container">
+        <form name="form1" action="" method="post">
+            <input type="hidden" name="submitF" value="1">
+            <input type="hidden" name="id" value="1206">
+            <header>
+                <h1>Customer Lead Panel</h1>
+                <div class="profile-icon" style="background:grey;">
+                    <a style="color:white;text-decoration:none;" href="manage-business-lead.php?action=end">End</a>
+                </div>
+            </header>
+
+         <div class="contact-info">
+
+    <div class="info-grid">
+
+        <div class="info-item">
+            <span class="label">Name</span>
+            <span class="value">hospital</span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Mobile Number</span>
+            <span class="value">093-513-0211 </span>
+            <!-- PERSON ICON -->
+<svg onclick="openPersonPopup()" class="person-icon" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="#19598c">
+<path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z"/>
+</svg>
+
+        </div>
+
+        <div class="info-item">
+            <span class="label">Address</span>
+            <span class="value"></span>
+        </div>
+
+        <div class="info-item">
+            <span class="label">Company Name</span>
+            <span class="value">Gera Hospital</span>
+        </div>
+
+    </div>
+
+</div>
+            
+            <div class="status-update">
+            <select id="sub_status" name="sub_status" required onchange="showConditionalFields()">
+            <option value="">Select</option>
+                    <option value="Hot" >Hot</option>
+                    <option value="Warm" >Warm</option>
+                    <option  value="Cold" >Cold</option>
+                    <option  value="Closed" >Closed</option>
+            </select>
+            
+            <select id="status" name="status" required onchange="showConditionalFields()">
+            <option value="">Select</option>
+                        <option value="Proposal Send">Proposal Send</option>	
+                        <option value="Discussed">Discussed</option>	
+                        <option value="Call Later">Call Later</option>	
+                        <option value="Not Reachable">Not Reachable</option>	
+                        <option value="Not Interested">Not Interested</option>	
+                        <option value="Fake Leads">Fake Leads</option>	
+                        </select>
+            <textarea id="remarks" name="remarks" rows="3" placeholder="Enter Internal Remarks"></textarea>
+          <textarea id="remarks" name="remarks" rows="3" placeholder="Enter Customer Remarks"></textarea>
+
+            <button type="submit" name="submit">Update Status</button>
+            </div>
+
+        </div>
+            
+             <!-- Combined Comment and Reschedule Popup -->
+    <div id="commentPopup" class="popup">
+        <button type="button" class="popup-close" style="width: 46px;
+    padding: 9px 11px 12px 9px;margin-top: 15px;
+    margin-right: 18px;
+    float: right;" onclick="closePopup('commentPopup')">&times;</button>
+        <h2>Discussed</h2>
+         <select name="escalate_status" id="escalate_status">
+				     <option value="">-</option>
+				       <option value="Escalate">Escalate</option>
+				        
+				         
+				     </select>
+        <textarea id="customerFeedback" name="customer_feedback" rows="5" placeholder="Enter customer feedback"></textarea>
+     
+        <button type="submit" onclick="closePopup('commentReschedulePopup')">Save</button>
+    </div>
+    <div id="ReschedulePopup" class="popup">
+        <button type="button" class="popup-close" style="width: 46px;
+    padding: 9px 11px 12px 9px;margin-top: 15px;
+    margin-right: 18px;
+    float: right;" onclick="closePopup('ReschedulePopup')">&times;</button>
+         <h2>Call Later</h2>
+        
+      <input type="datetime-local" id="rescheduleDatetime" name="scheduledatetime">
+        <button type="submit" onclick="closePopup('commentReschedulePopup')">Save</button>
+    </div>
+    <div id="overlay"></div>
+        </form>
+    </div>
+    
+   
+
+        </div></div>
+    <script>
+   
+         // Initialize Flatpickr on datetime input
+        flatpickr("#rescheduleDatetime", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        });
+    </script>
+
+
+
+    <script>
+ function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+
+    if (window.innerWidth <= 768) {
+        sidebar.classList.toggle("active");
+        overlay.classList.toggle("active");
+    } else {
+        sidebar.classList.toggle("collapsed");
+    }
+}
+</script>
+
+
+<!-- PERSON POPUP -->
+<div id="personPopup" class="popup">
+<h3>Customer Details</h3>
+<p>Discussed Added by Varsha  27 Aug, 2025 3:00 PM</p>
+<p>Client want seo work, reference site: indiabless.com</p>
+<p>Discussed Added by Varsha  27 Aug, 2025 3:00 PM</p>
+<p>Client want seo work, reference site: indiabless.com</p>
+<p>Discussed Added by Varsha  27 Aug, 2025 3:00 PM</p>
+<p>Client want seo work, reference site: indiabless.com</p>
+<p>Discussed Added by Varsha  27 Aug, 2025 3:00 PM</p>
+<p>Client want seo work, reference site: indiabless.com</p>
+
+<button onclick="closePersonPopup()">Close</button>
+</div>
+
+<div id="overlay" onclick="closePersonPopup()"></div>
+
+<script>
+function openPersonPopup(){
+    document.getElementById("overlay").style.display="block";
+    document.getElementById("personPopup").style.display="block";
+}
+
+function closePersonPopup(){
+    document.getElementById("overlay").style.display="none";
+    document.getElementById("personPopup").style.display="none";
+}
+</script>
+
+</body>
+</html>

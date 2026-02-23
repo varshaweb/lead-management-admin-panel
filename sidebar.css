@@ -1,0 +1,132 @@
+body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Toggle Button */
+        .toggle-btn {
+            position: fixed;
+            top: 15px;
+            left: 10px;
+            background: #19598c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1100;
+            width: 50px;
+        }
+
+        .toggle-btn:hover {
+            background: #0d3e63;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+
+        /* Sidebar Hidden */
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        /* Profile */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid #19598c;
+            margin-bottom: 8px;
+        }
+
+        .user-name {
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .side-btn {
+            display: block;
+            padding: 15px;
+            background: #19598c;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .side-btn:hover {
+            background: #0d3e63;
+        }
+
+        .logout {
+            background: #d9534f;
+            padding: 11px;
+        }
+
+        .logout:hover {
+            background: #b52b27;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 60px 30px;
+        }
+
+        /* Overlay for Mobile */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            z-index: 1000;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+
+            .sidebar {
+                position: fixed;
+                height: 100%;
+                z-index: 1050;
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                padding: 80px 20px;
+            }
+        }

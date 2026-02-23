@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer Lead Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="sidebar.css">
+
+    <style>
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+        header img {
+            width: 60px;
+        }
+        header h1 {
+            font-size: 2rem;
+            color: #333;
+            margin: 0;
+        }
+        .profile-icon {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background-color: #19598c;
+            color: #fff;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            white-space: nowrap;
+        }
+        .contact-info {
+            margin-bottom: 2rem;
+        }
+        .contact-info p {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .status-update select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .status-update button {
+            margin-top: 1.5rem;
+            padding: 1rem 2.5rem;
+            font-size: 1.5rem;
+            color: #fff;
+            background-color: #19598c;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        .status-update button:hover {
+            background-color: #0d3e63;
+        }
+        /* Additional CSS for the popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 100%;
+            max-width: 500px;
+        }
+        .popup h2 {
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: #333;
+        }
+        .popup textarea, .popup input[type="datetime-local"] {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 0.5rem;
+            font-size: 1.4rem;
+        }
+        .popup button {
+            padding: 1rem 2rem;
+            font-size: 1.4rem;
+            background-color: #19598c;
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        .popup button:hover {
+            background-color: #0d3e63;
+        }
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 500;
+        }
+    </style>
+    <script>
+        function showConditionalFields() {
+            var status = document.getElementById("status").value;
+            
+            if (status === "Call Later") {
+                openPopup('ReschedulePopup');
+                document.getElementById('rescheduleDatetime').click();
+
+            }
+        }
+
+        function openPopup(popupId) {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById(popupId).style.display = 'block';
+        }
+
+        function closePopup(popupId) {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById(popupId).style.display = 'none';
+        }
+    </script>
+    <!-- Include Flatpickr for enhanced date and time selection -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+
+    <div class="layout">
+
+        <!-- Toggle Button -->
+       <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+       <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="layout">
+
+        <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+        <div class="profile-section">
+            <img src="https://via.placeholder.com/90" class="profile-img">
+            <div class="user-name">John Doe</div>
+        </div>
+         
+        <a href="#" class="side-btn logout" style="margin-top: 20px;">Logout</a>
+        <a href="manage-business-lead-test.html" class="side-btn">Manage Lead</a>
+        <a href="warm-lead.html" class="side-btn">Warm Lead</a>
+        <a href="hot-lead.html" class="side-btn">Hot Lead</a>
+        <a href="Lead-report.html" class="side-btn">Employee Lead Report</a>
+        <a href="Meeting-report.html" class="side-btn">Meeting Report</a>
+        <a href="search-lead.html" class="side-btn">Search Lead</a>
+
+
+       
+
+    </div>
+
+
+        <div class="container">
+        <form name="form1" action="" method="post">
+            <input type="hidden" name="submitF" value="1">
+            <input type="hidden" name="id" value="52805">
+            <header>
+                <img src="../img/new-logo.jpg" style="width:150px;" alt="Company Logo">
+                <h1>Customer Lead Panel</h1>
+                <div class="profile-icon" style="background:grey;">
+                    <a style="color:white;text-decoration:none;" href="manage-leads.php?action=end">End</a>
+                </div>
+            </header>
+
+            <div class="contact-info">
+               
+                <p><strong>Customer Name:</strong>  PRAVEEN HALAGAP</p>
+                <p><strong>Customer Number:</strong> <a href="https://www.tatd.in/tatd20/driver-dashboard-list.php?booking_no=&mobile_number=9.19886E+1&driver_mobile=&Submit=Search" target="_blank">9198861</a> 
+              
+             
+                </p>
+                
+               
+            </div>
+            
+            <div class="status-update">
+            <select id="sub_status" name="sub_status" required onchange="showConditionalFields()">
+            <option value="">Select</option>
+                    <option value="Hot" >Hot</option>
+                    <option value="Warm" >Warm</option>
+                    <option  value="Cold" >Cold</option>
+                    <option  value="Closed" >Closed</option>
+            </select>
+            
+            
+            </div>
+            
+ 
+            <div class="status-update">
+            <select id="status" name="status" required onchange="showConditionalFields()">
+            <option value="">Select</option>
+                        <option value="Proposal Send">Proposal Send</option>    
+                        <option value="Discussed">Discussed</option>    
+                        <option value="Call Later">Call Later</option>  
+                        <option value="Not Reachable">Not Reachable</option>    
+                        <option value="Not Interested">Not Interested</option>  
+                        <option value="Fake Leads">Fake Leads</option>  
+                        </select>
+            <textarea id="remarks" name="remarks" rows="5" placeholder="Enter Remarks"></textarea>
+            
+            <button type="submit" name="submit">Update Status</button>
+            </div>
+
+        </div>
+
+
+
+            
+             <!-- Combined Comment and Reschedule Popup -->
+    <div id="commentPopup" class="popup">
+        <button type="button" class="popup-close" style="width: 46px;
+    padding: 9px 11px 12px 9px;margin-top: 15px;
+    margin-right: 18px;
+    float: right;" onclick="closePopup('commentPopup')">&times;</button>
+        <h2>Discussed</h2>
+         <select name="escalate_status" id="escalate_status">
+                     <option value="">-</option>
+                       <option value="Escalate">Escalate</option>
+                        
+                         
+                     </select>
+        <textarea id="customerFeedback" name="customer_feedback" rows="5" placeholder="Enter customer feedback"></textarea>
+     
+        <button type="submit" onclick="closePopup('commentReschedulePopup')">Save</button>
+    </div>
+    <div id="ReschedulePopup" class="popup">
+        <button type="button" class="popup-close" style="width: 46px;
+    padding: 9px 11px 12px 9px;margin-top: 15px;
+    margin-right: 18px;
+    float: right;" onclick="closePopup('ReschedulePopup')">&times;</button>
+         <h2>Call Later</h2>
+        
+      <input type="datetime-local" id="rescheduleDatetime" name="scheduledatetime">
+        <button type="submit" onclick="closePopup('commentReschedulePopup')">Save</button>
+    </div>
+    <div id="overlay"></div>
+        </form>
+    </div>
+    
+   
+
+        <script>
+   
+         // Initialize Flatpickr on datetime input
+        flatpickr("#rescheduleDatetime", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        });
+    </script>
+
+
+
+  <script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+
+        if (window.innerWidth <= 768) {
+            sidebar.classList.toggle("active");
+            overlay.classList.toggle("active");
+        } else {
+            sidebar.classList.toggle("collapsed");
+        }
+    }
+</script>
+
+</body>
+</html>
